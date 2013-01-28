@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="14d9c698-c1da-45b9-a220-f8fd79fbb8f1" name="BMac@BMAC-PC 2013-01-17 23:03:22" runUser="BMac-PC\BMac" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="1419f17f-0272-4b7d-a2f2-9ed0a9482513">
+    <Deployment runDeploymentRoot="BMac_BMAC-PC 2013-01-17 23_03_22">
+      <DeploymentItem filename="C:\Users\BMac\Documents\Visual Studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\EntityFramework.dll" />
+      <DeploymentItem filename="C:\Users\BMac\Documents\Visual Studio 2010\Projects\BudgetApp\packages\Moq.4.0.10827\lib\NET40\Moq.dll" />
+      <DeploymentItem filename="C:\Users\BMac\Documents\Visual Studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\Ninject.dll" />
+      <DeploymentItem filename="C:\Users\BMac\Documents\Visual Studio 2010\Projects\BudgetApp\BudgetApp.Domain\bin\Debug\BudgetApp.Domain.dll" />
+      <DeploymentItem filename="C:\Users\BMac\Documents\Visual Studio 2010\Projects\BudgetApp\BudgetApp\bin\BudgetApp.WebUI.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-01-17T23:03:22.8102589-06:00" queuing="2013-01-17T23:03:23.1772799-06:00" start="2013-01-17T23:03:23.1822801-06:00" finish="2013-01-17T23:03:24.0593303-06:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="Test_Routes" storage="c:\users\bmac\documents\visual studio 2010\projects\budgetapp\budgetapp.tests\bin\debug\budgetapp.tests.dll" id="e41b4f97-2a6f-a050-c7f2-f572d1124ad8">
+      <Execution id="f68f57ea-533c-4045-b034-436f38c5f3ca" />
+      <TestMethod codeBase="C:/Users/BMac/Documents/Visual Studio 2010/Projects/BudgetApp/BudgetApp.Tests/bin/Debug/BudgetApp.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="BudgetApp.Tests.MvcApplicationTest, BudgetApp.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Test_Routes" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="e41b4f97-2a6f-a050-c7f2-f572d1124ad8" executionId="f68f57ea-533c-4045-b034-436f38c5f3ca" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="f68f57ea-533c-4045-b034-436f38c5f3ca" testId="e41b4f97-2a6f-a050-c7f2-f572d1124ad8" testName="Test_Routes" computerName="BMAC-PC" duration="00:00:00.3891312" startTime="2013-01-17T23:03:23.1852803-06:00" endTime="2013-01-17T23:03:24.0463296-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f68f57ea-533c-4045-b034-436f38c5f3ca">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.IsTrue failed. </Message>
+          <StackTrace>   at BudgetApp.Tests.MvcApplicationTest.TestRouteFail(String URL, String contoller, String action, String HttpMethod, Object parameterSet) in C:\Users\BMac\Documents\Visual Studio 2010\Projects\BudgetApp\BudgetApp.Tests\MvcApplicationTest.cs:line 74
+   at BudgetApp.Tests.MvcApplicationTest.Test_Routes() in C:\Users\BMac\Documents\Visual Studio 2010\Projects\BudgetApp\BudgetApp.Tests\MvcApplicationTest.cs:line 29
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

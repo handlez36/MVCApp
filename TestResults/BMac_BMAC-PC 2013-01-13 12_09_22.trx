@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="8913bdf0-1025-4928-9dcc-5b857a7e1ec3" name="BMac@BMAC-PC 2013-01-13 12:09:22" runUser="BMac-PC\BMac" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="b182c453-2401-4278-a7ec-f7ee841610c3">
+    <Deployment runDeploymentRoot="BMac_BMAC-PC 2013-01-13 12_09_22">
+      <DeploymentItem filename="C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\packages\Moq.4.0.10827\lib\NET40\Moq.dll" />
+      <DeploymentItem filename="C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Domain\bin\Debug\BudgetApp.Domain.dll" />
+      <DeploymentItem filename="C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\BudgetApp.WebUI.dll" />
+      <DeploymentItem filename="C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-01-13T12:09:22.9768607-06:00" queuing="2013-01-13T12:09:24.3769408-06:00" start="2013-01-13T12:09:24.4599455-06:00" finish="2013-01-13T12:09:25.4560025-06:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="List_Entries_Test" storage="c:\users\bmac\documents\visual studio 2010\projects\budgetapp\budgetapp.tests\bin\debug\budgetapp.tests.dll" id="53e8487d-8cd9-a4f2-0484-c76efc0b2ebd">
+      <Execution id="a47a10a3-20ef-463c-8007-7613b71b5f0e" />
+      <TestMethod codeBase="C:/Users/BMac/documents/visual studio 2010/Projects/BudgetApp/BudgetApp.Tests/bin/Debug/BudgetApp.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="BudgetApp.Tests.HomeControllerTest, BudgetApp.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="List_Entries_Test" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="53e8487d-8cd9-a4f2-0484-c76efc0b2ebd" executionId="a47a10a3-20ef-463c-8007-7613b71b5f0e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="a47a10a3-20ef-463c-8007-7613b71b5f0e" testId="53e8487d-8cd9-a4f2-0484-c76efc0b2ebd" testName="List_Entries_Test" computerName="BMAC-PC" duration="00:00:00.3709074" startTime="2013-01-13T12:09:24.5499507-06:00" endTime="2013-01-13T12:09:25.3769980-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a47a10a3-20ef-463c-8007-7613b71b5f0e">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.AreEqual failed. Expected:&lt;First entry&gt;. Actual:&lt;Third entry&gt;. </Message>
+          <StackTrace>   at BudgetApp.Tests.HomeControllerTest.List_Entries_Test() in C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\HomeControllerTest.cs:line 48
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

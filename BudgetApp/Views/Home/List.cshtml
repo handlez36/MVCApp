@@ -1,0 +1,28 @@
+﻿@model BudgetApp.WebUI.Models.LedgerListModel
+@using BudgetApp.Domain.Concrete
+@using BudgetApp.WebUI.HtmlHelpers
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+@Html.ActionLink("Add new", "Edit", new { entryID = -1 })
+
+<table>
+@foreach (LedgerEntry entry in (IQueryable<LedgerEntry>)ViewData["listmodel"])
+{
+    <tr>
+    <td> @entry.Time.ToShortDateString()</td>
+    <td> @entry.Description </td>
+    <td> @entry.Category </td>
+    <td> @entry.EntryType </td>
+    <td> $@entry.Price </td>
+    <td> @Html.ActionLink("Edit", "Edit", new {entryID = entry.LedgerEntryID}) </td>
+    <td> @Html.ActionLink("Delete", "Delete", new { entryID = entry.LedgerEntryID }) </td>
+    </tr>
+}
+</table>
+
+@Html.LinkHelper(Model, x => Url.Action("List", new { page = x } ))

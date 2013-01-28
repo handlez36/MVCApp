@@ -1,0 +1,50 @@
+﻿@model IQueryable<BudgetApp.Domain.Entities.CreditEntry>
+@using BudgetApp.Domain.Entities
+
+@{
+    ViewBag.Title = "CreditView";
+}
+
+<h2>CreditView</h2>
+
+@Html.ActionLink("Add new", "Edit")
+
+<table>
+    <tr>
+        <td> Date </td>
+        <td> Description </td>
+        <td> Purchase Total </td>
+        <td> Amount Paid </td>
+        <td> Amount Remaining </td>
+        <td> Card Used </td>
+        <td> Who's Paying </td>
+        <td> Pay Date </td>
+    </tr>
+</table>
+@foreach (CreditEntry entry in Model)
+{
+            <input type="hidden" id="EntryId" value=@entry.CreditEntryId />
+            <div class="creditlistcell" > @entry.Date.ToShortDateString() </div>  <div id="edit-amount-paid" class="creditlistcell" > @entry.AmountPaid </div> <div class="creditlistcell" > @entry.CreditEntryId </div>
+            
+    /*            <td class="creditlistcell"> @Html.ActionLink(entry.Description, "Edit", new { EntryID = entry.CreditEntryId }) </td>
+            <td id="edit_amount" class="creditlistcell"> @entry.PurchaseTotal </td>
+            <td class="creditlistcell"> @entry.AmountPaid </td>
+            <td class="creditlistcell"> @entry.AmountRemaining </td>
+            <td id="card-spinner" class="creditlistcell"> @entry.Card </td>
+            <td class="creditlistcell"> @entry.ResponsibleParty </td>
+            <td class="creditlistcell"> @{if (!entry.PayDate.HasValue)
+                 {
+                     <div id="scheduledate" class="date">"Not Scheduled"</div>
+                 }else {
+                     <div id="scheduledate" class="date">@entry.PayDate.Value.ToShortDateString()</div>
+                 }} </td>
+        </tr>*/
+}
+
+
+<br />
+<br />
+<div id="editform" style="display: none;">
+    @{Html.RenderPartial("PartialCreditEdit", new CreditEntry());}
+</div>
+<a href="#" id="addentry">Add Purchase</a>

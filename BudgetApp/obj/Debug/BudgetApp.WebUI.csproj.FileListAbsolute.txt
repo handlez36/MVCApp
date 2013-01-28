@@ -1,0 +1,15 @@
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\BudgetApp.WebUI.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\BudgetApp.WebUI.pdb
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\BudgetApp.Domain.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\EntityFramework.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\Moq.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\Ninject.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\BudgetApp.Domain.pdb
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\EntityFramework.xml
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\Moq.pdb
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\Moq.xml
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\Ninject.pdb
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\bin\Ninject.xml
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\obj\Debug\BudgetApp.WebUI.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp\obj\Debug\BudgetApp.WebUI.pdb

@@ -1,0 +1,27 @@
+﻿@model BudgetApp.Domain.Entities.CreditEntry
+           
+@{
+    SelectListItem[] cards = ViewBag.Cards;
+    SelectListItem[] parties = ViewBag.Parties;
+}
+<table>
+    <tr>
+        <td class = "crediteditlabel"> Date </td>
+        <td class = "crediteditlabel"> Description </td>
+        <td class = "crediteditlabel"> How Much </td>
+        <td class = "crediteditlabel"> Paid? </td>
+        <td class = "crediteditlabel"> Which card </td>
+        <td class = "crediteditlabel"> Who pays </td>
+    </tr>
+</table>
+@using (Html.BeginForm("Edit", "CreditCard", new { add = true }, FormMethod.Post))
+{
+
+    @Html.TextBoxFor(c => c.Date, new { id = "date-input-field", @class = "crediteditform", @Value = DateTime.Now.ToShortDateString() });
+    @Html.TextBoxFor(c => c.Description, new { id = "description-input-field", @class = "crediteditform" });
+    @Html.TextBoxFor(c => c.PurchaseTotal, new { id = "purchase-input-field", @class = "crediteditform" });
+    @Html.TextBoxFor(c => c.AmountPaid, new { id = "paid-input-field", @class = "crediteditform" });
+    @Html.DropDownListFor(c => c.Card, cards, new { id = "card-input-field", @class = "crediteditform" });
+    @Html.DropDownListFor(c => c.ResponsibleParty, parties, new { id = "party-input-field", @class = "crediteditform" });
+    <input type="submit" value="Add" />
+}

@@ -1,0 +1,15 @@
+﻿@model BudgetApp.Domain.Entities.CreditEntry
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Add/Entry Entry </h2>
+
+@using (Html.BeginForm("Edit", "CreditCard", new {add = ViewBag.Action}, FormMethod.Post)) {
+    @Html.EditorForModel()
+    
+    <input type="submit" value="Add" />
+}
+
+

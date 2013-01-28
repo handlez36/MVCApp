@@ -1,0 +1,15 @@
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\BudgetApp.Tests.dll.config
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\BudgetApp.Tests.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\BudgetApp.Tests.pdb
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\BudgetApp.Domain.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\BudgetApp.WebUI.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\Moq.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\BudgetApp.Domain.pdb
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\BudgetApp.WebUI.pdb
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\Moq.pdb
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\Moq.xml
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\BudgetApp.WebUI_Accessor.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\bin\Debug\BudgetApp.WebUI_Accessor.pdb
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\obj\Debug\BudgetApp.Tests.dll
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Tests\obj\Debug\BudgetApp.Tests.pdb
