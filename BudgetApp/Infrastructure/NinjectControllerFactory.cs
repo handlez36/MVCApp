@@ -47,6 +47,8 @@ namespace BudgetApp.WebUI.Infrastructure
                 new CreditEntry{ Date = DateTime.Now, Description = "Test Entry 4", AmountPaid = 0.00M, AmountRemaining = 37.00M, PurchaseTotal = 37.00M, Card = "American Express" , ResponsibleParty = "Jeanine" },
             };
 
+            IEnumerable<PaymentPlanEntry> PaymentPlanEntries = new List<PaymentPlanEntry>();
+
             /**** Set up Mock interfaces ***/
             Mock<ILedgerEntries> MockEntries = new Mock<ILedgerEntries>();
             MockEntries.Setup(m => m.GetEntries).Returns(TestEntries.AsQueryable);          // Set up LedgerEntries binding using Moq
@@ -59,6 +61,9 @@ namespace BudgetApp.WebUI.Infrastructure
 
             Mock<ICreditEntries> MockCreditEntries = new Mock<ICreditEntries>();
             MockCreditEntries.Setup(m => m.CreditEntries).Returns(CreditEntries.AsQueryable);
+
+            Mock<IPaymentPlanEntries> MockPaymentPlanEntries = new Mock<IPaymentPlanEntries>();
+            MockPaymentPlanEntries.Setup(m => m.PaymentPlanEntries).Returns(PaymentPlanEntries.AsQueryable);
             /*******************************/
 
 

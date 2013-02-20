@@ -25,7 +25,7 @@ namespace BudgetApp
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "List", id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "CreditCard", action = "List", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }

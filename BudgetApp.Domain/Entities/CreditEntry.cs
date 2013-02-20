@@ -9,6 +9,7 @@ namespace BudgetApp.Domain.Entities
 {
     public class CreditEntry
     {
+
         [HiddenInput(DisplayValue=false)]
         public int CreditEntryId { get; set; }
 

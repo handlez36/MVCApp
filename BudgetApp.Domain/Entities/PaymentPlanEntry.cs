@@ -9,6 +9,7 @@ namespace BudgetApp.Domain.Entities
     {
         public DateTime PaymentDate { get; set; }
         public decimal PaymentTotal { get; set; }
-        public List<CreditEntry> Charges { get; set; }
+        public string Card { get; set; }
+        public List<PaymentPlanCharge> Charges { get; set; }
     }
 }

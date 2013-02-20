@@ -14,12 +14,14 @@ namespace BudgetApp.WebUI.Controllers
         public ICardEntries CardList;
         public IResponsiblePartyEntries PartyList;
         public ICreditEntries CreditEntryList;
+        public IPaymentPlanEntries PaymentPlanEntries;
 
-        public CreditCardController(ICardEntries Cards, IResponsiblePartyEntries Parties, ICreditEntries CreditEntries)
+        public CreditCardController(ICardEntries Cards, IResponsiblePartyEntries Parties, ICreditEntries CreditEntries, IPaymentPlanEntries PaymentPlanEntries)
         {
             this.CardList = Cards;
             this.PartyList = Parties;
             this.CreditEntryList = CreditEntries;
+            this.PaymentPlanEntries = PaymentPlanEntries;
         }
 
         public ActionResult List()
@@ -92,7 +94,72 @@ namespace BudgetApp.WebUI.Controllers
         [HttpPost]
         public string UpdateField(string id, string value, int EntryId)
         {
+            EFCreditEntries dB = new EFCreditEntries();
+
+            CreditEntry Entry = (CreditEntry)CreditEntryList.CreditEntries
+                                    .Where(c => c.CreditEntryId == EntryId)
+                                    .First();
+            switch (id)
+            {
+                case "paydate-spinner":
+                    Entry.PayDate = DateTime.Parse(value);
+                    break;
+                case "entry-description":
+                    Entry.Description = value;
+                    break;
+                case "entry-amount":
+                    Entry.PurchaseTotal = Decimal.Parse(value);
+                    break;
+                case "amount-paid":
+                    Entry.AmountPaid = Decimal.Parse(value);
+                    break;
+                default:
+                    break;
+            }
+
+            if (Entry.PayDate.HasValue)
+                UpdatePaymentPlans(Entry);
+
+            dB.Edit(Entry);
+
             return value;
+        }
+
+        private void UpdatePaymentPlans(CreditEntry entry)
+        {
+            // Is this a new payment plan add, or an update to an existing payment plan
+            bool newAdd = true;
+
+            // Is there already a payment plan entry for this date and card?
+            foreach (PaymentPlanEntry payment in PaymentPlanEntries.PaymentPlanEntries)
+            {
+                // Check for plan matching entry's date and card
+                if (payment.PaymentDate.Equals(entry.PayDate.Value) &&
+                    (payment.Card == entry.Card))
+                {
+                    newAdd = false;
+                    payment.Charges.Add(new PaymentPlanCharge{ PurchaseAmount = entry.PurchaseTotal, Description = entry.Description });
+                    break;
+                } 
+            }
+
+            if (newAdd)
+            {
+                PaymentPlanEntries.PaymentPlanEntries.ToList().Add(new PaymentPlanEntry {
+                    Card = entry.Card,
+                    Charges = new List<PaymentPlanCharge> { 
+                        new PaymentPlanCharge { PurchaseAmount = entry.PurchaseTotal, Description = entry.Description }
+                    },
+                    PaymentDate = entry.PayDate.HasValue ? entry.PayDate.Value : DateTime.Now,
+                    PaymentTotal = entry.AmountPaid
+                });
+            }
+
+        }
+
+        public string ListPayments()
+        {
+            return "Response";
         }
 
         public ActionResult Delete(CreditEntry Entry)

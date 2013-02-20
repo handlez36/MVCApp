@@ -11,6 +11,7 @@
 
 <table>
     <tr>
+        <td style="visibility:hidden"></td>
         <td> Date </td>
         <td> Description </td>
         <td> Purchase Total </td>
@@ -20,28 +21,25 @@
         <td> Who's Paying </td>
         <td> Pay Date </td>
     </tr>
-</table>
 @foreach (CreditEntry entry in Model)
 {
-            <input type="hidden" id="EntryId" value=@entry.CreditEntryId />
-            <div class="creditlistcell" > @entry.Date.ToShortDateString() </div>  <div id="edit-amount-paid" class="creditlistcell" > @entry.AmountPaid </div> <div class="creditlistcell" > @entry.CreditEntryId </div>
-            
-    /*            <td class="creditlistcell"> @Html.ActionLink(entry.Description, "Edit", new { EntryID = entry.CreditEntryId }) </td>
-            <td id="edit_amount" class="creditlistcell"> @entry.PurchaseTotal </td>
-            <td class="creditlistcell"> @entry.AmountPaid </td>
-            <td class="creditlistcell"> @entry.AmountRemaining </td>
+    <tr>
+            <td id="EntryId" style="visibility:hidden">@entry.CreditEntryId</td>
+            <td id="entry-date" class="creditlistcell"> @entry.Date.ToShortDateString() </td>
+            <td id="entry-description" class="creditlistcell"> @Html.ActionLink(entry.Description, "Edit", new { EntryID = entry.CreditEntryId }) </td>
+            <td id="entry-amount" class="creditlistcell"> @entry.PurchaseTotal </td>
+            <td id="amount-paid" class="creditlistcell"> @entry.AmountPaid </td>
+            <td id="amount-remaining" class="creditlistcell_static"> @entry.AmountRemaining </td>
             <td id="card-spinner" class="creditlistcell"> @entry.Card </td>
-            <td class="creditlistcell"> @entry.ResponsibleParty </td>
-            <td class="creditlistcell"> @{if (!entry.PayDate.HasValue)
-                 {
-                     <div id="scheduledate" class="date">"Not Scheduled"</div>
-                 }else {
-                     <div id="scheduledate" class="date">@entry.PayDate.Value.ToShortDateString()</div>
-                 }} </td>
-        </tr>*/
+            <td id="party-spinner"> @entry.ResponsibleParty </td>
+            <td id="paydate-spinner"><div id="scheduledate" class="date">@{if (!entry.PayDate.HasValue) 
+                                                                           { <div>"Not Scheduled"</div>
+                                                                           } else
+                                                                           {  @entry.PayDate.Value.ToShortDateString()
+                                                                           }} </div> </td>
+    </tr>
 }
-
-
+</table>
 <br />
 <br />
 <div id="editform" style="display: none;">
