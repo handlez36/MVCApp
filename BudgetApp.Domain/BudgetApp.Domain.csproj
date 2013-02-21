@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Abstract\ICardEntries.cs" />
     <Compile Include="Abstract\ICreditEntries.cs" />
+    <Compile Include="Abstract\IPaymentPlanEntries.cs" />
     <Compile Include="Abstract\IResponsiblePartyEntries.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Abstract\ILedgerEntries.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Concrete\LedgerDBContext.cs" />
     <Compile Include="Concrete\LedgerEntry.cs" />
     <Compile Include="Entities\CreditEntry.cs" />
+    <Compile Include="Entities\PaymentPlanCharge.cs" />
     <Compile Include="Entities\PaymentPlanEntry.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
