@@ -1,5 +1,6 @@
 ﻿@model IQueryable<BudgetApp.Domain.Entities.CreditEntry>
 @using BudgetApp.Domain.Entities
+@using BudgetApp.WebUI.ViewModels
 
 @{
     ViewBag.Title = "CreditView";
@@ -7,11 +8,11 @@
 
 <h2>CreditView</h2>
 
-@Html.ActionLink("Add new", "Edit")
 
-<table>
+@{string noDate = "None";}
+<table id="credit-table" style="display:inline-table; margin-left: 0px">
     <tr>
-        <td style="visibility:hidden"></td>
+        <td style="visibility:hidden; width:0px"></td>
         <td> Date </td>
         <td> Description </td>
         <td> Purchase Total </td>
@@ -23,23 +24,25 @@
     </tr>
 @foreach (CreditEntry entry in Model)
 {
-    <tr>
-            <td id="EntryId" style="visibility:hidden">@entry.CreditEntryId</td>
-            <td id="entry-date" class="creditlistcell"> @entry.Date.ToShortDateString() </td>
-            <td id="entry-description" class="creditlistcell"> @Html.ActionLink(entry.Description, "Edit", new { EntryID = entry.CreditEntryId }) </td>
-            <td id="entry-amount" class="creditlistcell"> @entry.PurchaseTotal </td>
-            <td id="amount-paid" class="creditlistcell"> @entry.AmountPaid </td>
-            <td id="amount-remaining" class="creditlistcell_static"> @entry.AmountRemaining </td>
-            <td id="card-spinner" class="creditlistcell"> @entry.Card </td>
-            <td id="party-spinner"> @entry.ResponsibleParty </td>
-            <td id="paydate-spinner"><div id="scheduledate" class="date">@{if (!entry.PayDate.HasValue) 
-                                                                           { <div>"Not Scheduled"</div>
-                                                                           } else
-                                                                           {  @entry.PayDate.Value.ToShortDateString()
-                                                                           }} </div> </td>
+        <tr>
+            <td id="EntryId-@(entry.CreditEntryId)" style="visibility:hidden; width:0px">@entry.CreditEntryId</td>
+            <td id="entry-date-@(entry.CreditEntryId)" class="creditdatefield">@entry.Date.ToShortDateString()</td>
+            <td id="entry-description-@(entry.CreditEntryId)" class="creditlistcell">@entry.Description</td>
+            <td id="entry-amount-@(entry.CreditEntryId)" class="creditlistcell">@entry.PurchaseTotal</td>
+            <td id="amount-paid-@(entry.CreditEntryId)" class="creditlistcell">@entry.AmountPaid</td>
+            <td id="amount-remaining-@(entry.CreditEntryId)" class="creditlistcell_static">@entry.AmountRemaining</td>
+            <td id="card-spinner-@(entry.CreditEntryId)" class="creditlistcell">@entry.Card</td>
+            <td id="party-spinner-@(entry.CreditEntryId)">@entry.ResponsibleParty</td>
+            <td id="paydate-spinner-@(entry.CreditEntryId)"><input id="scheduledate-@(entry.CreditEntryId)" class="test" type="text" value="@(entry.PayDate.HasValue
+                                                                                                                                                ? entry.PayDate.Value.ToShortDateString()
+                                                                                                                                                : noDate 
+                                                                                                                                              )" /></td>
     </tr>
 }
 </table>
+<div id="payment-table" style="display:inline-table; margin-left: 40px">
+    @Html.Partial("AggregatePaymentPlans", ViewBag.PaymentPlans as PaymentPlanViewModel)
+</div>
 <br />
 <br />
 <div id="editform" style="display: none;">

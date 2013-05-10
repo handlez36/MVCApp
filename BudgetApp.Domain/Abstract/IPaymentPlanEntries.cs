@@ -8,6 +8,10 @@ namespace BudgetApp.Domain.Abstract
 {
     public interface IPaymentPlanEntries
     {
-        IQueryable<PaymentPlanEntry> PaymentPlanEntries { get; set; }
+        IQueryable<PaymentPlanEntry> PaymentPlanEntries { get; }
+
+        void Add(PaymentPlanEntry entry);
+        void Modify(PaymentPlanEntry entry);
+        void Delete(PaymentPlanEntry entry);
     }
 }

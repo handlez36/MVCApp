@@ -12,3 +12,6 @@ C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Domain\b
 C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Domain\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Domain\obj\Debug\BudgetApp.Domain.dll
 C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Domain\obj\Debug\BudgetApp.Domain.pdb
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Domain\obj\Debug\GenerateResource.read.1.tlog
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Domain\obj\Debug\GenerateResource.write.1.tlog
+C:\Users\BMac\documents\visual studio 2010\Projects\BudgetApp\BudgetApp.Domain\obj\Debug\BudgetApp.Domain.Migrations.NewPaymentPlanChargeTableAndLinkage.resources

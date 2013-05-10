@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 using BudgetApp.Domain.Abstract;
 using BudgetApp.Domain.Concrete;
 using BudgetApp.Domain.Entities;
+using BudgetApp.WebUI.ViewModels;
 
 namespace BudgetApp.WebUI.Controllers
 {
@@ -36,13 +38,51 @@ namespace BudgetApp.WebUI.Controllers
 
             ViewBag.Parties =
                 (from party in PartyList.Parties.ToArray()
+                 orderby party
                  select new SelectListItem
                  {
                      Text = party,
                      Value = party
-                 }).ToArray();
+                 }).ToList();
+
+            ViewBag.PaymentPlans = AggregatePaymentPlans(PartyList.Parties.ToList());
 
             return View("CreditView", CreditEntryList.CreditEntries);
+        }
+
+        public PaymentPlanViewModel AggregatePaymentPlans(List<string> AllParties)
+        {
+            // Create ViewModel object and set the Parties property
+            PaymentPlanViewModel PaymentPlans = new PaymentPlanViewModel();
+            PaymentPlans.Parties = AllParties;
+
+            // Sort PaymentPlanEntries by ascending date
+            // Also eagerly load the PaymentPlanEntries and PaymentPlanCharges
+            IQueryable<PaymentPlanEntry> payments = PaymentPlanEntries.PaymentPlanEntries
+                                                .OrderBy(p => p.PaymentDate)
+                                                .Include(x => x.Charges);
+
+
+            // Cycle through PaymentPlanEntries to populate PaymentPlanViewModel
+            foreach (PaymentPlanEntry entry in payments)
+            {
+                IDictionary<string, decimal> AmtPerParty = new Dictionary<string, decimal>();
+
+                if (PaymentPlans.plans.ContainsKey(entry.PaymentDate))
+                {
+                    var Amt = PaymentPlans.plans[entry.PaymentDate];
+                    Amt[entry.ResponsibleParty] = entry.PaymentTotal;
+                }
+                else
+                {
+                    AmtPerParty[entry.ResponsibleParty] = entry.PaymentTotal;
+                    PaymentPlans.plans.Add(entry.PaymentDate, AmtPerParty);
+                }
+
+            }
+
+            //return PartialView(PaymentPlans);
+            return PaymentPlans;
         }
 
         public ActionResult Edit(int? EntryID)
@@ -150,7 +190,7 @@ namespace BudgetApp.WebUI.Controllers
                     Charges = new List<PaymentPlanCharge> { 
                         new PaymentPlanCharge { PurchaseAmount = entry.PurchaseTotal, Description = entry.Description }
                     },
-                    PaymentDate = entry.PayDate.HasValue ? entry.PayDate.Value : DateTime.Now,
+                    PaymentDate = entry.PayDate.Value,
                     PaymentTotal = entry.AmountPaid
                 });
             }

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.ComponentModel.DataAnnotations;
+using System.Web;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BudgetApp.Domain.Entities
 {
@@ -29,7 +30,8 @@ namespace BudgetApp.Domain.Entities
         public decimal AmountPaid { get; set; }
         [DataType(DataType.Currency)]
         public decimal AmountRemaining { get; set; }
-
+        
+        [Column("Party")]
         public String ResponsibleParty { get; set; }
 
     }

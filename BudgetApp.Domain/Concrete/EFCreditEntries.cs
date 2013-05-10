@@ -5,12 +5,13 @@ using System.Text;
 using BudgetApp.Domain.Abstract;
 using BudgetApp.Domain.Concrete;
 using BudgetApp.Domain.Entities;
+using BudgetApp.Domain.DAL;
 
 namespace BudgetApp.Domain.Concrete
 {
     public class EFCreditEntries : ICreditEntries
     {
-        CreditDBContext DbContext = new CreditDBContext();
+        LedgerDBContext DbContext = new LedgerDBContext();
 
         public IQueryable<CreditEntry> CreditEntries
         {

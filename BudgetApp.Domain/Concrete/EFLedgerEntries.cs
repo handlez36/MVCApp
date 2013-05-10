@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BudgetApp.Domain.Abstract;
 using BudgetApp.Domain.Concrete;
+using BudgetApp.Domain.DAL;
 
 namespace BudgetApp.Domain.Concrete
 {

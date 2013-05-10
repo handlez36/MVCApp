@@ -2,7 +2,7 @@
            
 @{
     SelectListItem[] cards = ViewBag.Cards;
-    SelectListItem[] parties = ViewBag.Parties;
+    SelectListItem[] parties = ViewBag.Parties.ToArray();
 }
 <table>
     <tr>
@@ -24,4 +24,5 @@
     @Html.DropDownListFor(c => c.Card, cards, new { id = "card-input-field", @class = "crediteditform" });
     @Html.DropDownListFor(c => c.ResponsibleParty, parties, new { id = "party-input-field", @class = "crediteditform" });
     <input type="submit" value="Add" />
+    <input id="canceladd" type="button" value="Cancel" />
 }

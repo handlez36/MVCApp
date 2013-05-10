@@ -1,0 +1,36 @@
+﻿@model BudgetApp.WebUI.ViewModels.PaymentPlanViewModel
+
+<table>
+    <tr>
+        <td>Date</td>
+        @foreach (string name in @Model.Parties)
+        {
+            <td>@name</td>   
+        }
+        <td>Total</td>
+    </tr>
+
+    @{ decimal total; }
+    @foreach (DateTime paydate in @Model.plans.Keys)
+    {
+        <tr>
+            @{total = 0;}
+            <td>@paydate.ToShortDateString()</td>
+            @{ var plans = @Model.plans[paydate];}
+
+            @foreach (string party in @Model.Parties)
+            {
+                if (plans.ContainsKey(party))
+                {
+                    <td>$@plans[party]</td>
+                    total += plans[party];
+                }
+                else
+                {
+                    <td>None</td>
+                }
+            }
+        <td>$@total</td>
+        </tr>   
+    }
+</table>

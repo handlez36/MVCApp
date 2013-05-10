@@ -9,6 +9,7 @@ using Moq;
 using BudgetApp.Domain.Concrete;
 using BudgetApp.Domain.Abstract;
 using BudgetApp.Domain.Entities;
+using BudgetApp.Domain.DAL;
 
 namespace BudgetApp.WebUI.Infrastructure
 {
@@ -62,8 +63,8 @@ namespace BudgetApp.WebUI.Infrastructure
             Mock<ICreditEntries> MockCreditEntries = new Mock<ICreditEntries>();
             MockCreditEntries.Setup(m => m.CreditEntries).Returns(CreditEntries.AsQueryable);
 
-            Mock<IPaymentPlanEntries> MockPaymentPlanEntries = new Mock<IPaymentPlanEntries>();
-            MockPaymentPlanEntries.Setup(m => m.PaymentPlanEntries).Returns(PaymentPlanEntries.AsQueryable);
+            //Mock<IPaymentPlanEntries> MockPaymentPlanEntries = new Mock<IPaymentPlanEntries>();
+            //MockPaymentPlanEntries.Setup(m => m.PaymentPlanEntries).Returns(PaymentPlanEntries.AsQueryable);
             /*******************************/
 
 
@@ -74,6 +75,7 @@ namespace BudgetApp.WebUI.Infrastructure
             // Create bindings
             kernel.Bind<ILedgerEntries>().To<EFLedgerEntries>();
             kernel.Bind<ICreditEntries>().To<EFCreditEntries>();
+            kernel.Bind<IPaymentPlanEntries>().To<EFPaymentPlanEntries>();
             
             kernel.Bind<ICardEntries>().ToConstant(MockCardEntries.Object);
             kernel.Bind<IResponsiblePartyEntries>().ToConstant(MockPartyEntries.Object);

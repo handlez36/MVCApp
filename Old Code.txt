@@ -1,0 +1,7 @@
+<td id="paydate-spinner"><input id="scheduledate" type="hidden" /><div id="schedule-date-label" class="date">@{if (!entry.PayDate.HasValue) 
+                                                                           { <div>"Not Scheduled"</div>
+                                                                           } else
+                                                                           {  @entry.PayDate.Value.ToShortDateString()
+                                                                           }} </div></td>
+																		   
+																		   
