@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Data.Entity;
 using BudgetApp.WebUI.Infrastructure;
+using BudgetApp.Domain.DAL;
 
 namespace BudgetApp
 {
@@ -36,6 +38,8 @@ namespace BudgetApp
 
             // Set DefaultControllerFactory to NinjectControllerFactory
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
+
+            Database.SetInitializer<LedgerDBContext>(new LedgerInitializer());
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);

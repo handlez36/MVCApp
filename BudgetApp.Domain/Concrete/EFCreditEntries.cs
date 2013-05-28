@@ -11,7 +11,12 @@ namespace BudgetApp.Domain.Concrete
 {
     public class EFCreditEntries : ICreditEntries
     {
-        LedgerDBContext DbContext = new LedgerDBContext();
+        LedgerDBContext DbContext;
+
+        public EFCreditEntries(LedgerDBContext context)
+        {
+            this.DbContext = context;
+        }
 
         public IQueryable<CreditEntry> CreditEntries
         {
@@ -22,19 +27,19 @@ namespace BudgetApp.Domain.Concrete
         public void Add(CreditEntry Entry)
         {
             DbContext.Entry(Entry).State = System.Data.EntityState.Added;
-            DbContext.SaveChanges();
+            //DbContext.SaveChanges();
         }
 
         public void Edit(CreditEntry Entry)
         {
             DbContext.Entry(Entry).State = System.Data.EntityState.Modified;
-            DbContext.SaveChanges();
+            //DbContext.SaveChanges();
         }
 
         public void Delete(CreditEntry Entry)
         {
             DbContext.Entry(Entry).State = System.Data.EntityState.Deleted;
-            DbContext.SaveChanges();
+            //DbContext.SaveChanges();
         }
     }
 }

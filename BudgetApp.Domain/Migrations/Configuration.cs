@@ -32,7 +32,7 @@ namespace BudgetApp.Domain.Migrations
 
             var PaymentPlans = new List<PaymentPlanEntry>
             {
-                new PaymentPlanEntry { PaymentDate=DateTime.Parse("2013-03-01"), Card="American Express", PaymentTotal=40.0M },
+                new PaymentPlanEntry { id=4, PaymentDate=DateTime.Parse("2013-03-01"), Card="American Express", PaymentTotal=40.0M },
             };
             PaymentPlans.ForEach(p => context.PaymentPlanEntries.Add(p));
             context.SaveChanges();

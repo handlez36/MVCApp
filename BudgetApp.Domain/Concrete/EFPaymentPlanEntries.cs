@@ -11,7 +11,12 @@ namespace BudgetApp.Domain.Concrete
 {
     public class EFPaymentPlanEntries : IPaymentPlanEntries
     {
-        private LedgerDBContext context = new LedgerDBContext();
+        private LedgerDBContext context;
+
+        public EFPaymentPlanEntries(LedgerDBContext context)
+        {
+            this.context = context;
+        }
 
         public IQueryable<PaymentPlanEntry> PaymentPlanEntries
         {
@@ -21,19 +26,20 @@ namespace BudgetApp.Domain.Concrete
         public void Add(PaymentPlanEntry entry)
         {
             context.PaymentPlanEntries.Add(entry);
-            context.SaveChanges();
         }
 
         public void Modify(PaymentPlanEntry entry)
         {
             context.Entry(entry).State = System.Data.EntityState.Modified;
-            context.SaveChanges();
+
+            // Clean up, if necessary
+            if (entry.Charges.Count < 1)
+                Delete(entry);
         }
 
         public void Delete(PaymentPlanEntry entry)
         {
             context.PaymentPlanEntries.Remove(entry);
-            context.SaveChanges();
         }
     }
 }

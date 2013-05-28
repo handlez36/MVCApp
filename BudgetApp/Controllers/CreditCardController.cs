@@ -8,6 +8,7 @@ using BudgetApp.Domain.Abstract;
 using BudgetApp.Domain.Concrete;
 using BudgetApp.Domain.Entities;
 using BudgetApp.WebUI.ViewModels;
+using BudgetApp.Domain.DAL;
 
 namespace BudgetApp.WebUI.Controllers
 {
@@ -17,6 +18,14 @@ namespace BudgetApp.WebUI.Controllers
         public IResponsiblePartyEntries PartyList;
         public ICreditEntries CreditEntryList;
         public IPaymentPlanEntries PaymentPlanEntries;
+        public UnitofWork unitOfWork;
+
+        // Constant strings for CreditEntry field names
+        private const string SCHEDULEDDATE = "scheduledate";
+        private const string DESCRIPTION = "entry-description";
+        private const string PURCHASEAMOUNT = "entry-amount";
+        private const string PAYAMOUNT = "amount-paid";
+        private const string CARD = "card-spinner";
 
         public CreditCardController(ICardEntries Cards, IResponsiblePartyEntries Parties, ICreditEntries CreditEntries, IPaymentPlanEntries PaymentPlanEntries)
         {
@@ -24,6 +33,8 @@ namespace BudgetApp.WebUI.Controllers
             this.PartyList = Parties;
             this.CreditEntryList = CreditEntries;
             this.PaymentPlanEntries = PaymentPlanEntries;
+
+            unitOfWork = new UnitofWork();
         }
 
         public ActionResult List()
@@ -45,16 +56,30 @@ namespace BudgetApp.WebUI.Controllers
                      Value = party
                  }).ToList();
 
-            ViewBag.PaymentPlans = AggregatePaymentPlans(PartyList.Parties.ToList());
+            ViewBag.PaymentPlans = AggregatePaymentPlans();
 
             return View("CreditView", CreditEntryList.CreditEntries);
         }
 
-        public PaymentPlanViewModel AggregatePaymentPlans(List<string> AllParties)
+        /**
+         * Action method for updating PaymentPlan Partial View
+         * 
+         */
+        public ActionResult UpdatePaymentPlans()
+        {
+            PaymentPlanViewModel plans = AggregatePaymentPlans();
+            return PartialView("AggregatePaymentPlans", plans);
+        }
+
+        /**
+         * Action method for updating PaymentPlanViewModel 
+         * 
+         */
+        public PaymentPlanViewModel AggregatePaymentPlans()
         {
             // Create ViewModel object and set the Parties property
             PaymentPlanViewModel PaymentPlans = new PaymentPlanViewModel();
-            PaymentPlans.Parties = AllParties;
+            PaymentPlans.Parties = PartyList.Parties.ToList();
 
             // Sort PaymentPlanEntries by ascending date
             // Also eagerly load the PaymentPlanEntries and PaymentPlanCharges
@@ -62,26 +87,37 @@ namespace BudgetApp.WebUI.Controllers
                                                 .OrderBy(p => p.PaymentDate)
                                                 .Include(x => x.Charges);
 
-
             // Cycle through PaymentPlanEntries to populate PaymentPlanViewModel
             foreach (PaymentPlanEntry entry in payments)
             {
                 IDictionary<string, decimal> AmtPerParty = new Dictionary<string, decimal>();
 
+                IEnumerable<string> parties = entry.Charges
+                    .Select(c => c.CreditEntry.ResponsibleParty);
+
                 if (PaymentPlans.plans.ContainsKey(entry.PaymentDate))
                 {
                     var Amt = PaymentPlans.plans[entry.PaymentDate];
-                    Amt[entry.ResponsibleParty] = entry.PaymentTotal;
+
+                    //Calculate PaymentPlanTotal from linked Charges
+                    var total = entry.Charges.Sum(t => t.CreditEntry.AmountPaid);
+                    Amt[entry.ResponsibleParty] = total;                                    //entry.PaymentTotal;
                 }
                 else
                 {
-                    AmtPerParty[entry.ResponsibleParty] = entry.PaymentTotal;
+                    foreach (string party in parties)
+                    {
+                        var total = entry.Charges
+                                         .Where(c => c.CreditEntry.ResponsibleParty == party)
+                                         .Sum(t => t.CreditEntry.AmountPaid);
+
+                        AmtPerParty[party] = total;
+                    }
                     PaymentPlans.plans.Add(entry.PaymentDate, AmtPerParty);
                 }
 
             }
 
-            //return PartialView(PaymentPlans);
             return PaymentPlans;
         }
 
@@ -111,17 +147,18 @@ namespace BudgetApp.WebUI.Controllers
         [HttpPost]
         public ActionResult Edit(CreditEntry Entry, bool add)
         {
-            EFCreditEntries dB = new EFCreditEntries();
+            //EFCreditEntries dB = new EFCreditEntries();
 
             if (ModelState.IsValid)
             {
                 Entry.AmountRemaining = Entry.PurchaseTotal - Entry.AmountPaid;
 
                 if (add)
-                    dB.Add(Entry);
+                    unitOfWork.CreditRepo.Add(Entry);
                 else
-                    dB.Edit(Entry);
+                    unitOfWork.CreditRepo.Edit(Entry);
 
+                unitOfWork.Save();
                 return RedirectToAction("List");
             }
             else
@@ -131,82 +168,149 @@ namespace BudgetApp.WebUI.Controllers
             
         }
 
-        [HttpPost]
-        public string UpdateField(string id, string value, int EntryId)
+        public string UpdateField(string id, string value)
         {
-            EFCreditEntries dB = new EFCreditEntries();
+            bool dateChange = false;
+            
+            /*CreditEntry Entry = (CreditEntry)unitOfWork.CreditRepo.CreditEntries
+                                    .Where(c => c.CreditEntryId == EntryId)
+                                    .First();*/
 
-            CreditEntry Entry = (CreditEntry)CreditEntryList.CreditEntries
+            int EntryId = Convert.ToInt32(id.Substring(id.LastIndexOf('-')+1));
+            id = id.Substring(0, id.LastIndexOf('-'));
+
+            CreditEntry Entry = (CreditEntry)unitOfWork.CreditRepo.CreditEntries
                                     .Where(c => c.CreditEntryId == EntryId)
                                     .First();
+
             switch (id)
             {
-                case "paydate-spinner":
+                case SCHEDULEDDATE:
                     Entry.PayDate = DateTime.Parse(value);
+                    dateChange = true;
                     break;
-                case "entry-description":
+                case DESCRIPTION:
                     Entry.Description = value;
                     break;
-                case "entry-amount":
+                case PURCHASEAMOUNT:
                     Entry.PurchaseTotal = Decimal.Parse(value);
                     break;
-                case "amount-paid":
+                case PAYAMOUNT:
                     Entry.AmountPaid = Decimal.Parse(value);
+                    break;
+                case CARD:
+                    Entry.Card = value;
                     break;
                 default:
                     break;
             }
 
-            if (Entry.PayDate.HasValue)
-                UpdatePaymentPlans(Entry);
+            if (dateChange)
+            {
+                if (Entry.PayDate.HasValue)
+                    UpdatePaymentPlans(Entry);
+                else
+                    DeleteCharges(Entry);
+            } 
 
-            dB.Edit(Entry);
+
+            /*if (Entry.PayDate.HasValue && dateChange)
+                UpdatePaymentPlans(Entry);
+            else
+            {
+                DeleteCharges(Entry);
+            }*/
+
+            unitOfWork.CreditRepo.Edit(Entry);
+            unitOfWork.Save();
 
             return value;
         }
 
         private void UpdatePaymentPlans(CreditEntry entry)
         {
-            // Is this a new payment plan add, or an update to an existing payment plan
+            // Is this a new payment plan charge we're adding?
             bool newAdd = true;
+            PaymentPlanCharge charge;
+            PaymentPlanEntry oldPlan = null;
 
-            // Is there already a payment plan entry for this date and card?
-            foreach (PaymentPlanEntry payment in PaymentPlanEntries.PaymentPlanEntries)
+            // Pull the charge for the DB.
+            // If charge exists, pull the attached PaymentPlan
+            // If charge does not exist, create a new charge
+            charge = unitOfWork.PaymentPlanChargeRepo.PaymentPlanCharges
+                .Where(c => c.CreditEntry.CreditEntryId == entry.CreditEntryId)
+                .SingleOrDefault();
+
+            if (charge != null) {
+                oldPlan = charge.PaymentPlanEntry;
+                newAdd = false;
+            }
+            else {
+                charge = new PaymentPlanCharge
+                    {
+                        PurchaseAmount = entry.PurchaseTotal,
+                        Description = entry.Description,
+                        Comment = "Added" + DateTime.Now.ToShortDateString(),
+                        CreditEntry = entry
+                    };
+            }
+
+            // Does a paymentplan with the modified date already exist
+            PaymentPlanEntry plan = unitOfWork.PaymentPlanRepo.PaymentPlanEntries
+                .Where(p => p.PaymentDate == entry.PayDate.Value)
+                .SingleOrDefault();
+
+            if (plan != null)
             {
-                // Check for plan matching entry's date and card
-                if (payment.PaymentDate.Equals(entry.PayDate.Value) &&
-                    (payment.Card == entry.Card))
+                plan.Charges.Add(charge);
+                unitOfWork.PaymentPlanRepo.Modify(plan);
+            }
+            else
+            {
+                PaymentPlanEntry newEntry = new PaymentPlanEntry
                 {
-                    newAdd = false;
-                    payment.Charges.Add(new PaymentPlanCharge{ PurchaseAmount = entry.PurchaseTotal, Description = entry.Description });
-                    break;
-                } 
+                    Card = entry.Card,
+                    Charges = new List<PaymentPlanCharge> { charge },
+                    PaymentDate = entry.PayDate.Value,
+                    PaymentTotal = entry.AmountPaid,
+                    ResponsibleParty = entry.ResponsibleParty
+
+                };
+                unitOfWork.PaymentPlanRepo.Add(newEntry);
             }
 
-            if (newAdd)
+            // If this is an existing charge, remove from old PaymentPlan
+            if (!newAdd)
             {
-                PaymentPlanEntries.PaymentPlanEntries.ToList().Add(new PaymentPlanEntry {
-                    Card = entry.Card,
-                    Charges = new List<PaymentPlanCharge> { 
-                        new PaymentPlanCharge { PurchaseAmount = entry.PurchaseTotal, Description = entry.Description }
-                    },
-                    PaymentDate = entry.PayDate.Value,
-                    PaymentTotal = entry.AmountPaid
-                });
+                oldPlan.Charges.Remove(charge);
+                unitOfWork.PaymentPlanRepo.Modify(oldPlan);
             }
+                
 
         }
 
-        public string ListPayments()
+        private void DeleteCharges(CreditEntry entry)
         {
-            return "Response";
+            // Find existing charge and the PaymentPlan it's attached to
+            PaymentPlanCharge charge = unitOfWork.PaymentPlanChargeRepo.PaymentPlanCharges
+                .Where(c => c.CreditEntry == entry)
+                .First();
+
+            PaymentPlanEntry oldPlan = charge.PaymentPlanEntry;
+
+            // Remove charge from payment plan.  Then remove charge.
+            oldPlan.Charges.Remove(charge);
+            unitOfWork.PaymentPlanChargeRepo.Delete(charge);
         }
 
         public ActionResult Delete(CreditEntry Entry)
         {
-            EFCreditEntries dB = new EFCreditEntries();
+            //EFCreditEntries dB = new EFCreditEntries();
 
-            dB.Delete(Entry);
+            //dB.Delete(Entry);
+            unitOfWork.CreditRepo.Delete(Entry);
+            unitOfWork.Save();
+
             return RedirectToAction("List");
         }
 

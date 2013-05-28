@@ -54,23 +54,23 @@
   <ItemGroup>
     <Compile Include="Abstract\ICardEntries.cs" />
     <Compile Include="Abstract\ICreditEntries.cs" />
+    <Compile Include="Abstract\IPaymentPlanChargeEntry.cs" />
     <Compile Include="Abstract\IPaymentPlanEntries.cs" />
     <Compile Include="Abstract\IResponsiblePartyEntries.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Abstract\ILedgerEntries.cs" />
+    <Compile Include="Concrete\EFPaymentPlanChargeEntries.cs" />
     <Compile Include="Concrete\CreditContext.cs" />
     <Compile Include="DAL\LedgerDBContext.cs" />
     <Compile Include="Concrete\EFCreditEntries.cs" />
     <Compile Include="Concrete\EFLedgerEntries.cs" />
     <Compile Include="Concrete\EFPaymentPlanEntries.cs" />
     <Compile Include="Concrete\LedgerEntry.cs" />
+    <Compile Include="DAL\LedgerInitializer.cs" />
+    <Compile Include="DAL\UnitofWork.cs" />
     <Compile Include="Entities\CreditEntry.cs" />
     <Compile Include="Entities\PaymentPlanCharge.cs" />
     <Compile Include="Entities\PaymentPlanEntry.cs" />
-    <Compile Include="Migrations\201305100300127_NewPaymentPlanChargeTableAndLinkage.cs" />
-    <Compile Include="Migrations\201305100300127_NewPaymentPlanChargeTableAndLinkage.Designer.cs">
-      <DependentUpon>201305100300127_NewPaymentPlanChargeTableAndLinkage.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -80,11 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201305100300127_NewPaymentPlanChargeTableAndLinkage.resx">
-      <DependentUpon>201305100300127_NewPaymentPlanChargeTableAndLinkage.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

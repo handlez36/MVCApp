@@ -13,7 +13,21 @@ $(document).ready(function () {
 
     $('#entry-date').datepicker();
 
-    $("[id^=scheduledate]").datepicker();
+    $("[id^=scheduledate]").datepicker({
+        onSelect: function (selectedDate) {
+            var request = $.get("CreditCard/UpdateField",
+                                { id: $(this).attr("id"), value: selectedDate },
+                                function (data) {
+                                    $.get("CreditCard/UpdatePaymentPlans",
+                                    {}, function (data) {
+                                        $('#payment-table').html(data);
+                                    });
+                                }
+                                );
+        }
+    });
+
+
 
     /**
     * Grabs EntryID after a cell with class '.creditlistcell' has been clicked

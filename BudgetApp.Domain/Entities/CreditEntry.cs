@@ -34,5 +34,8 @@ namespace BudgetApp.Domain.Entities
         [Column("Party")]
         public String ResponsibleParty { get; set; }
 
+        //[ForeignKey("id")]
+        //public virtual PaymentPlanCharge PaymentPlanCharge { get; set; }
+
     }
 }

@@ -10,6 +10,11 @@
 
 
 @{string noDate = "None";}
+<div id="update-payments">
+    @Ajax.ActionLink("Update Payments", "UpdatePaymentPlans", new AjaxOptions {
+        UpdateTargetId = "payment-table",
+    })
+</div>
 <table id="credit-table" style="display:inline-table; margin-left: 0px">
     <tr>
         <td style="visibility:hidden; width:0px"></td>
@@ -37,9 +42,10 @@
                                                                                                                                                 ? entry.PayDate.Value.ToShortDateString()
                                                                                                                                                 : noDate 
                                                                                                                                               )" /></td>
-    </tr>
+        </tr>
 }
 </table>
+
 <div id="payment-table" style="display:inline-table; margin-left: 40px">
     @Html.Partial("AggregatePaymentPlans", ViewBag.PaymentPlans as PaymentPlanViewModel)
 </div>
