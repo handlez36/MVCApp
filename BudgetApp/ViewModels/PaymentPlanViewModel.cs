@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using BudgetApp.Domain.Entities;
 
 namespace BudgetApp.WebUI.ViewModels
 {
@@ -10,11 +11,11 @@ namespace BudgetApp.WebUI.ViewModels
 
         public PaymentPlanViewModel()
         {
-            Parties = new List<string>();
+            Parties = new List<PartyEntry>();
             plans = new Dictionary<DateTime, IDictionary<string, decimal>>();
         }
 
-        public IEnumerable<string> Parties { get; set; }
+        public IEnumerable<PartyEntry> Parties { get; set; }
         public Dictionary<DateTime, IDictionary<string, decimal>> plans { get; set; }
     }
 }

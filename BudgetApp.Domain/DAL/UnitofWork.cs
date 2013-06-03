@@ -13,6 +13,8 @@ namespace BudgetApp.Domain.DAL
         private EFPaymentPlanEntries paymentPlanRepo;
         private EFPaymentPlanChargeEntries paymentPlanChargeRepo;
         private EFLedgerEntries LedgerRepo;
+        private EFCardEntries cardRepo;
+        private EFPartyEntries partyRepo;
 
         public EFCreditEntries CreditRepo
         {
@@ -36,6 +38,28 @@ namespace BudgetApp.Domain.DAL
             }
         }
 
+        public EFCardEntries CardRepo
+        {
+            get
+            {
+                if (this.cardRepo == null)
+                    this.cardRepo = new EFCardEntries(context);
+
+                return cardRepo;
+            }
+        }
+
+        public EFPartyEntries PartyRepo
+        {
+            get
+            {
+                if (this.partyRepo == null)
+                    this.partyRepo = new EFPartyEntries(context);
+
+                return partyRepo;
+            }
+        }
+
         public EFPaymentPlanChargeEntries PaymentPlanChargeRepo
         {
             get
@@ -49,7 +73,9 @@ namespace BudgetApp.Domain.DAL
 
         public void Save()
         {
+            var count = context.CardEntries.Count();
             context.SaveChanges();
+            count = context.CardEntries.Count();
         }
 
         private bool disposed = false;

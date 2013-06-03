@@ -75,6 +75,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\HtmlLinkHelper.cs" />
+    <Compile Include="Infrastructure\CreditEntryModelBinder.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\LedgerListModel.cs" />
@@ -110,6 +111,7 @@
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Global.asax" />
+    <Content Include="JS\accounting.js" />
     <Content Include="JS\jquery.jeditable.ajaxupload.js" />
     <Content Include="JS\jquery.jeditable.autogrow.js" />
     <Content Include="JS\jquery.jeditable.charcounter.js" />
@@ -119,6 +121,7 @@
     <Content Include="JS\jquery.jeditable.time.js" />
     <Content Include="JS\jquery.jeditable.timepicker.js" />
     <Content Include="JS\site.js" />
+    <Content Include="Scripts\accounting.js" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />

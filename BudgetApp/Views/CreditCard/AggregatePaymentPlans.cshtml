@@ -3,12 +3,12 @@
 
 <table>
     <tr>
-        <td>Date</td>
-        @foreach (string name in @Model.Parties)
+        <th>Date</th>
+        @foreach (string name in @Model.Parties.Select(p=>p.PartyName))
         {
-            <td>@name</td>   
+            <th>@name</th>   
         }
-        <td>Total</td>
+        <th>Total</th>
     </tr>
 
     @{ decimal total; }
@@ -19,7 +19,7 @@
             <td>@paydate.ToShortDateString()</td>
             @{ var plans = @Model.plans[paydate];}
 
-            @foreach (string party in @Model.Parties)
+            @foreach (string party in @Model.Parties.Select(p=>p.PartyName))
             {
                 if (plans.ContainsKey(party))
                 {

@@ -22,7 +22,8 @@ namespace BudgetApp.Domain.Entities
         public DateTime? PayDate { get; set; }
 
         public String Description { get; set; }
-        public String Card { get; set; }
+        //public String Card { get; set; }
+        public CardEntry Card { get; set; }
         
         [DataType(DataType.Currency)]
         public decimal PurchaseTotal { get; set; }
@@ -30,9 +31,10 @@ namespace BudgetApp.Domain.Entities
         public decimal AmountPaid { get; set; }
         [DataType(DataType.Currency)]
         public decimal AmountRemaining { get; set; }
-        
+
         [Column("Party")]
-        public String ResponsibleParty { get; set; }
+        public virtual PartyEntry ResponsibleParty { get; set; }
+        //public String ResponsibleParty { get; set; }
 
         //[ForeignKey("id")]
         //public virtual PaymentPlanCharge PaymentPlanCharge { get; set; }

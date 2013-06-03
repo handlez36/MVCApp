@@ -4,7 +4,8 @@
     SelectListItem[] cards = ViewBag.Cards;
     SelectListItem[] parties = ViewBag.Parties.ToArray();
 }
-<table>
+<div id="add-new-entry" class="new-entry">
+<table class="new-entry-headings">
     <tr>
         <td class = "crediteditlabel"> Date </td>
         <td class = "crediteditlabel"> Description </td>
@@ -26,3 +27,4 @@
     <input type="submit" value="Add" />
     <input id="canceladd" type="button" value="Cancel" />
 }
+</div>

@@ -15,33 +15,37 @@
         UpdateTargetId = "payment-table",
     })
 </div>
-<table id="credit-table" style="display:inline-table; margin-left: 0px">
+<table id="credit-table" style="display:inline-table; margin-left: 0px" border="0">
     <tr>
         <td style="visibility:hidden; width:0px"></td>
-        <td> Date </td>
-        <td> Description </td>
-        <td> Purchase Total </td>
-        <td> Amount Paid </td>
-        <td> Amount Remaining </td>
-        <td> Card Used </td>
-        <td> Who's Paying </td>
-        <td> Pay Date </td>
+        <th style="text-align:center; width:100px"> Date </th>
+        <th style="text-align:center"> Description </th>
+        <th style="text-align:center"> Purchase Total ($) </th>
+        <th style="text-align:center"> Amount Paid ($) </th>
+        <th style="text-align:center"> Amount Remaining ($) </th>
+        <th style="text-align:center"> Card Used </th>
+        <th style="text-align:center"> Who's Paying </th>
+        <th style="text-align:center; width:100px"> Pay Date </th>
     </tr>
 @foreach (CreditEntry entry in Model)
 {
+    // Set the selected Card and Responsible party for the respective dropdowns
+    SelectList cardList = new SelectList( (IEnumerable<SelectListItem>)ViewBag.Cards, "value", "text", entry.Card.Card);
+    SelectList partyList = new SelectList((IEnumerable<SelectListItem>)ViewBag.Parties, "value", "text", entry.ResponsibleParty.PartyName);
+    
         <tr>
             <td id="EntryId-@(entry.CreditEntryId)" style="visibility:hidden; width:0px">@entry.CreditEntryId</td>
-            <td id="entry-date-@(entry.CreditEntryId)" class="creditdatefield">@entry.Date.ToShortDateString()</td>
+            <td id="date-@(entry.CreditEntryId)" class="creditdatefield"><input style="width: 100px; border: none; font-size: small; text-align:center" id="entry-date-@(entry.CreditEntryId)" type="text" value="@entry.Date.ToShortDateString()" /></td>
             <td id="entry-description-@(entry.CreditEntryId)" class="creditlistcell">@entry.Description</td>
-            <td id="entry-amount-@(entry.CreditEntryId)" class="creditlistcell">@entry.PurchaseTotal</td>
-            <td id="amount-paid-@(entry.CreditEntryId)" class="creditlistcell">@entry.AmountPaid</td>
-            <td id="amount-remaining-@(entry.CreditEntryId)" class="creditlistcell_static">@entry.AmountRemaining</td>
-            <td id="card-spinner-@(entry.CreditEntryId)" class="creditlistcell">@entry.Card</td>
-            <td id="party-spinner-@(entry.CreditEntryId)">@entry.ResponsibleParty</td>
-            <td id="paydate-spinner-@(entry.CreditEntryId)"><input id="scheduledate-@(entry.CreditEntryId)" class="test" type="text" value="@(entry.PayDate.HasValue
-                                                                                                                                                ? entry.PayDate.Value.ToShortDateString()
-                                                                                                                                                : noDate 
-                                                                                                                                              )" /></td>
+            <td id="entry-amount-@(entry.CreditEntryId)" class="creditlist-editablecell">@entry.PurchaseTotal</td>
+            <td id="amount-paid-@(entry.CreditEntryId)" class="creditlist-editablecell">@entry.AmountPaid</td>
+            <td id="amount-remaining-@(entry.CreditEntryId)" class="creditlistcell-staticcell">@entry.AmountRemaining</td>
+            <td id="card-spinner" class="spinner">@Html.DropDownList("card-spinner-" + entry.CreditEntryId, cardList, new { @class = "edit-spinner" })</td>
+            <td id="party-spinner" class="spinner">@Html.DropDownList("party-spinner-" + entry.CreditEntryId, partyList, new { @class = "edit-spinner" })</td>
+            <td id="paydate-spinner-@(entry.CreditEntryId)"><input style="width: 100px; border: none; font-size: small; text-align:center" id="scheduledate-@(entry.CreditEntryId)" class="test" type="text" value="@(entry.PayDate.HasValue
+                                                                                                                                                                    ? entry.PayDate.Value.ToShortDateString()
+                                                                                                                                                                    : noDate 
+                                                                                                                                                                  )" /></td>
         </tr>
 }
 </table>

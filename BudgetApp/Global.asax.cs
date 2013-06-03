@@ -7,6 +7,7 @@ using System.Web.Routing;
 using System.Data.Entity;
 using BudgetApp.WebUI.Infrastructure;
 using BudgetApp.Domain.DAL;
+using BudgetApp.Domain.Entities;
 
 namespace BudgetApp
 {
@@ -40,6 +41,7 @@ namespace BudgetApp
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
 
             Database.SetInitializer<LedgerDBContext>(new LedgerInitializer());
+            ModelBinders.Binders.Add(typeof(CreditEntry), new CreditEntryModelBinder());
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);

@@ -59,6 +59,8 @@
     <Compile Include="Abstract\IResponsiblePartyEntries.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Abstract\ILedgerEntries.cs" />
+    <Compile Include="Concrete\EFPartyEntries.cs" />
+    <Compile Include="Concrete\EFCardEntries.cs" />
     <Compile Include="Concrete\EFPaymentPlanChargeEntries.cs" />
     <Compile Include="Concrete\CreditContext.cs" />
     <Compile Include="DAL\LedgerDBContext.cs" />
@@ -68,7 +70,10 @@
     <Compile Include="Concrete\LedgerEntry.cs" />
     <Compile Include="DAL\LedgerInitializer.cs" />
     <Compile Include="DAL\UnitofWork.cs" />
+    <Compile Include="Entities\CardEntry.cs" />
+    <Compile Include="Entities\PartyEntry.cs" />
     <Compile Include="Entities\CreditEntry.cs" />
+    <Compile Include="Entities\CreditEntryWrapper.cs" />
     <Compile Include="Entities\PaymentPlanCharge.cs" />
     <Compile Include="Entities\PaymentPlanEntry.cs" />
     <Compile Include="Migrations\Configuration.cs" />

@@ -2,16 +2,32 @@
 /// <reference path="../Scripts/jquery-1.5.1-vsdoc.js" />
 /// <reference path="../Scripts/jquery-ui-1.8.11.js" />
 /// <reference path="../Scripts/jquery.jeditable.js" />
+/// <reference path="../Scripts/accounting.js" />
 
 
 var creditcardentry = {};
+
+var Money = function (amount) {
+    this.amount = amount;
+}
+
+Money.prototype.valueOf = function () {
+    return parseFloat(Math.round(this.amount * 100) / 100).toFixed(2);
+}
 
 $(document).ready(function () {
     var entry_clicked_id = "Nothing";
 
     creditcardentry.expandform();
 
-    $('#entry-date').datepicker();
+    $("[id^=entry-date]").datepicker({
+        onSelect: function (selectedDate) {
+            var request = $.get("CreditCard/UpdateField",
+                                { id: $(this).attr("id"), value: selectedDate });
+        }
+    });
+
+    $('#date-input-field').datepicker();
 
     $("[id^=scheduledate]").datepicker({
         onSelect: function (selectedDate) {
@@ -27,17 +43,27 @@ $(document).ready(function () {
         }
     });
 
-
-
     /**
     * Grabs EntryID after a cell with class '.creditlistcell' has been clicked
     * @param
     * @return
     */
-    $('.creditlistcell').click(function () {
+    $('.creditlist-editablecell').click(function () {
         var entry_clicked = $(this).attr("id");
         var string_segments = entry_clicked.split('-')
         entry_clicked_id = string_segments[2];
+    });
+
+    $('.edit-spinner').change(function (e) {
+        $.get("CreditCard/UpdateField",
+                { id: $(this).attr("id"), value: $(this).val() },
+                function (data) {
+                    $.get("CreditCard/UpdatePaymentPlans",
+                            {}, function (data) {
+                                $('#payment-table').html(data);
+                          });
+                }
+              );
     });
 
 
@@ -46,7 +72,7 @@ $(document).ready(function () {
     * @param
     * @return
     */
-    $('.creditlistcell').editable("CreditCard/UpdateField",
+    $('.creditlist-editablecell').editable("CreditCard/UpdateField",
     {
         submitdata: {
             EntryId: function () {
@@ -54,16 +80,28 @@ $(document).ready(function () {
             }
         },
         callback: function (value, settings) {
+
+
             // Calculate remaining balance after price change
-            var edit_amount = parseFloat($('#entry-amount-' + entry_clicked_id).html());
-            var amount_paid = parseFloat($('#amount-paid-' + entry_clicked_id).html());
-            var remaining_balance = eval(edit_amount - amount_paid);
+            var tmp_edit_amount = $('#entry-amount-' + entry_clicked_id).html();
+            var edit_amount = new Money(parseFloat(tmp_edit_amount).toFixed(2));
+
+            var amount_paid =
+                new Money(
+                    parseFloat($('#amount-paid-' + entry_clicked_id).html())
+                 )
+
+            var remaining_balance = accounting.formatMoney(
+                eval(edit_amount - amount_paid)
+            );
             $('#amount-remaining-' + entry_clicked_id).html("" + remaining_balance);
 
+
             // Update Payments List
-            var request = $.get("CreditCard/ListPayments", function (data) {
-                alert(data);
-            });
+            var request = $.get("CreditCard/UpdatePaymentPlans", {},
+                                   function (data) {
+                                       $('#payment-table').html(data);
+                                   });
 
         }
     });

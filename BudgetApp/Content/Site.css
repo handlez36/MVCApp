@@ -357,3 +357,27 @@ div#title {
 {
     width: 105px;
 }
+
+.new-entry 
+{
+    width: 50%;
+    background-color: ThreeDLighShadow;
+}
+
+#credit-table 
+{
+    font-size: small;
+    text-align: center;
+    border-color: Maroon;
+    
+}
+
+#new-entry-headings 
+{
+    border: double;
+}
+
+.spinner 
+{
+    font-size: small;
+}

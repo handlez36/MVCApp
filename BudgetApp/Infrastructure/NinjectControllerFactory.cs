@@ -41,12 +41,12 @@ namespace BudgetApp.WebUI.Infrastructure
             IEnumerable<String> CardEntries = new List<String> { "AmEx", "Suntrust", "Kohls" };
             IEnumerable<String> PartyEntries = new List<String> { "Brandon", "Jeanine", "Joint", "Vacation", "Emergency", "Savings", "TBD" };
 
-            IEnumerable<CreditEntry> CreditEntries = new List<CreditEntry> {
+            /*IEnumerable<CreditEntry> CreditEntries = new List<CreditEntry> {
                 new CreditEntry{ Date = DateTime.Now, Description = "Test Entry 1", AmountPaid = 200.00M, AmountRemaining = 300.00M, PurchaseTotal = 500.00M, Card = "American Express" , ResponsibleParty = "Brandon" },
                 new CreditEntry{ Date = DateTime.Now, Description = "Test Entry 2", AmountPaid = 0.00M, AmountRemaining = 150.00M, PurchaseTotal = 150.00M, Card = "American Express" , ResponsibleParty = "Brandon" },
                 new CreditEntry{ Date = DateTime.Now, Description = "Test Entry 3", AmountPaid = 50.00M, AmountRemaining = 450.00M, PurchaseTotal = 500.00M, Card = "Suntrust" , ResponsibleParty = "Brandon" },
                 new CreditEntry{ Date = DateTime.Now, Description = "Test Entry 4", AmountPaid = 0.00M, AmountRemaining = 37.00M, PurchaseTotal = 37.00M, Card = "American Express" , ResponsibleParty = "Jeanine" },
-            };
+            };*/
 
             IEnumerable<PaymentPlanEntry> PaymentPlanEntries = new List<PaymentPlanEntry>();
 
@@ -54,17 +54,14 @@ namespace BudgetApp.WebUI.Infrastructure
             Mock<ILedgerEntries> MockEntries = new Mock<ILedgerEntries>();
             MockEntries.Setup(m => m.GetEntries).Returns(TestEntries.AsQueryable);          // Set up LedgerEntries binding using Moq
 
-            Mock<ICardEntries> MockCardEntries = new Mock<ICardEntries>();
+            /*Mock<ICardEntries> MockCardEntries = new Mock<ICardEntries>();
             MockCardEntries.Setup(m => m.CreditCards).Returns(CardEntries.AsQueryable);
 
             Mock<IResponsiblePartyEntries> MockPartyEntries = new Mock<IResponsiblePartyEntries>();
             MockPartyEntries.Setup(m => m.Parties).Returns(PartyEntries.AsQueryable);
 
-            Mock<ICreditEntries> MockCreditEntries = new Mock<ICreditEntries>();
-            MockCreditEntries.Setup(m => m.CreditEntries).Returns(CreditEntries.AsQueryable);
-
-            //Mock<IPaymentPlanEntries> MockPaymentPlanEntries = new Mock<IPaymentPlanEntries>();
-            //MockPaymentPlanEntries.Setup(m => m.PaymentPlanEntries).Returns(PaymentPlanEntries.AsQueryable);
+            Mock<IPaymentPlanEntries> MockPaymentPlanEntries = new Mock<IPaymentPlanEntries>();
+            MockPaymentPlanEntries.Setup(m => m.PaymentPlanEntries).Returns(PaymentPlanEntries.AsQueryable);*/
             /*******************************/
 
 
@@ -76,9 +73,11 @@ namespace BudgetApp.WebUI.Infrastructure
             kernel.Bind<ILedgerEntries>().To<EFLedgerEntries>();
             kernel.Bind<ICreditEntries>().To<EFCreditEntries>();
             kernel.Bind<IPaymentPlanEntries>().To<EFPaymentPlanEntries>();
+            kernel.Bind<ICardEntries>().To<EFCardEntries>();
+            kernel.Bind<IResponsiblePartyEntries>().To<EFPartyEntries>();
             
-            kernel.Bind<ICardEntries>().ToConstant(MockCardEntries.Object);
-            kernel.Bind<IResponsiblePartyEntries>().ToConstant(MockPartyEntries.Object);
+            //kernel.Bind<ICardEntries>().ToConstant(MockCardEntries.Object);
+            //kernel.Bind<IResponsiblePartyEntries>().ToConstant(MockPartyEntries.Object);
         }
     }
 }

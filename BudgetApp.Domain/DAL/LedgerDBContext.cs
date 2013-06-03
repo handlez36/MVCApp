@@ -15,5 +15,7 @@ namespace BudgetApp.Domain.DAL
         public DbSet<CreditEntry> CreditEntries { get; set; }
         public DbSet<PaymentPlanEntry> PaymentPlanEntries { get; set; }
         public DbSet<PaymentPlanCharge> PaymentPlanCharges { get; set; }
+        public DbSet<CardEntry> CardEntries { get; set; }
+        public DbSet<PartyEntry> PartyEntries { get; set; }
     }
 }
